@@ -14,27 +14,6 @@ variable "description" {
   type        = string
 }
 
-# variable "permit_arns" {
-#   description = "A map of a list of ARNs with permissions to assign as keys ['Read', 'Write', 'ReadWrite', or 'All']."
-#   type        = map(list(string))
-
-#   validation {
-#     condition = alltrue(flatten([
-#       for k, v in var.permit_arns : [
-#         for i in v : can(provider::aws::arn_parse(i))
-#       ]
-#     ]))
-#     error_message = "The `permit_arns` values must be a list of valid ARNs."
-#   }
-
-#   validation {
-#     condition = alltrue([
-#       for k, v in var.permit_arns : contains(["Read", "Write", "ReadWrite", "All"], k)
-#     ])
-#     error_message = "The `permit_arns` keys must be 'Read', 'Write', 'ReadWrite', or 'All'."
-#   }
-# }
-
 variable "admin_principals" {
   default     = []
   description = "A list of ARNs of IAM principals that can access the secret."
