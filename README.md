@@ -4,6 +4,7 @@ This module creates a secret and allows assignment of permissions to IAM users o
 
 ## Usage
 
+```hcl
 module "secret" {
   source = "dustindortch/secretsmanager/aws"
 
@@ -12,6 +13,7 @@ module "secret" {
   read_principals         = [module.lambda.lambda.arn]
   recovery_window_in_days = 0
 }
+```
 
 ## Branching Strategy
 
