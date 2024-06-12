@@ -1,6 +1,6 @@
-# template-terraform-module
+# terraform-aws-secretsmanager
 
-This repository is a template for creating a new Terraform module.
+This module creates a secret and allows assignment of permissions to IAM users or AWS Services.
 
 ## Usage
 
@@ -45,10 +45,13 @@ The branching strategy for Terraform modules essentially follows 'Release Flow' 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | ~> 1.8 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
 
 ## Modules
 
@@ -56,17 +59,22 @@ No modules.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [aws_secretsmanager_secret.secret](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/secretsmanager_secret) | resource |
+| [aws_iam_policy_document.policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_description"></a> [description](#input\_description) | Description of secret. | `string` | `""` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the principal resource for the module. (Required) | `string` | n/a | yes |
+| <a name="input_permit_arns"></a> [permit\_arns](#input\_permit\_arns) | A list of ARNs to permit access to the principal resource. | `map(list(string))` | n/a | yes |
+| <a name="input_recovery_window_in_days"></a> [recovery\_window\_in\_days](#input\_recovery\_window\_in\_days) | The number of days that AWS Secrets Manager waits before it can delete the secret. '0' means that the secret can be deleted immediately, or value must be between '7' and '30'. | `number` | `30` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | A map of tags to assign to the principal resource. | `map(string)` | `{}` | no |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_name"></a> [name](#output\_name) | The `name` of the principal resource for the module. |
+No outputs.
 <!-- END_TF_DOCS -->
