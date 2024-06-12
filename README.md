@@ -4,32 +4,14 @@ This module creates a secret and allows assignment of permissions to IAM users o
 
 ## Usage
 
-Clone as a new repository (using the GitHub CLI):
+module "secret" {
+  source = "dustindortch/secretsmanager/aws"
 
-```bash
-name="lz" # Example for naming as 'terraform-aws-lz'
-PUBLIC_REPO=true
-TERRAFORM_MODULE_PROVIDER="aws"
-TERRAFORM_MODULE_NAME="terraform-${TERRAFORM_MODULE_PROVIDER}-${name}"
-TEMPLATE_REPOSITORY="dustindortch/template-terraform-module"
-
-if [ "${PWD##*/}" == "${TERRAFORM_MODULE_NAME}" ]; then
-  cd ..
-fi
-
-gh repo create "${TERRAFORM_MODULE_NAME}" `[ "${PUBLIC_REPO}" == true ] && echo "--public" || echo "--private"` --template "${TEMPLATE_REPOSITORY}" --clone
-```
-
-Modify the name within this README.md file to match the name of the module you are creating (e.g. `terraform-aws-s3-bucket`).
-
-Update the code within the Terraform configuration files (`main.tf`, `variables.tf`, `outputs.tf`) to match the desired functionality of the module.  The files created represent the recommended files for any Terraform configuration code.
-
-## Establish variables/secrets for the repository
-
-The repository should have the following established if initial publishing is desired:
-
-TF_REGISTRY_ADDR: (variable) The address of the Terraform Registry (e.g. `registry.terraform.io` or `app.terraform.io`)
-TF_REGISTRY_TOKEN: (secret) The token for the Terraform Registry.  If publishing to HCP Terraform or Terraform Enterprise, this should be a team token with privileges to publish modules.
+  name                    = "my-secret-new"
+  admin_principals        = [data.aws_caller_identity.current.arn]
+  read_principals         = [module.lambda.lambda.arn]
+  recovery_window_in_days = 0
+}
 
 ## Branching Strategy
 
